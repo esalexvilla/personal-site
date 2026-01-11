@@ -1,0 +1,183 @@
+---
+import "../styles/style.css";
+import Container from "../components/Container.astro";
+import Window from "../components/Window.astro";
+import Timeline from "../components/Timeline.astro";
+import Skill from "../components/Skill.astro";
+import background_sample from "../images/background_sample.jpg";
+import pfp from "../images/pfp.jpeg";
+import person from "../icons/person.svg";
+import home from "../icons/home.svg";
+import code from "../icons/code.svg";
+import "@fontsource-variable/saira"
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Portfolio Site</title>
+		<script is:inline>
+			const getTheme = () => {
+				const saved = localStorage.getItem('theme');
+				if (saved) return saved;
+				return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+			};
+			document.documentElement.setAttribute('data-theme', getTheme());
+		</script>
+	</head>
+	<body>
+		<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+			<span id="theme-icon">🌙</span>
+		</button>
+		<Container>
+			<Window title="Home" background_image={background_sample.src} icon={home.src}>
+				<div class="window-banner-inner">
+					<div class="window-pfp-container">
+						<div>
+							<img src={pfp.src} alt="Portrait" width="125" height="125">
+						</div>
+						<div>
+							<h2>Hello! I'm Alex</h2>
+							<p>Welcome to my personal site.</p>
+						</div>
+					</div>
+				</div>
+			</Window>
+			<Window title="About Me" icon={person.src}>
+				<p>My name is Alejandro Villarreal Ayala, but I prefer if people just call me Alex.</p>
+				<p>I am a Full-Stack Developer at Upango Consulting, where I help develop custom Shopify Applications for our B2B clients.</p>
+				<p>While I work, I use every new project as an opportunity to learn new things and try new technologies that might be useful in the future.</p>
+				<p>On my free time, I manage my own home server, in which I host a few self-developed tools and other docker containers that I consider useful.</p>
+				<p>I like to stay on the edge of technology, and love to try out new things, I'm really passionate about technologies such as VR / XR and its future potential.</p>
+				<p>Traveling is also one of my favorite hobbies, which I try to do when I can, I've traveled to many places in Spain, Europe and North America, and I love seeing the differences between my home country and all the other countries I've visited, as it helps me not only understand more about other cultures, but also about myself.</p>
+			</Window>
+			<Window title="Skills" icon={code.src}>
+				<div class="skills-grid">
+					<Skill name="JavaScript" proficiency={90} />
+					<Skill name="TypeScript" proficiency={90} />
+					<Skill name="Node.js" proficiency={90} />
+					<Skill name="React" proficiency={80} />
+					<Skill name="Astro" proficiency={60} />
+					<Skill name="Docker" proficiency={70} />
+					<Skill name="MariaDB" proficiency={75} />
+					<Skill name="Shopify Liquid" proficiency={95} />
+					<Skill name="CSS" proficiency={80} />
+					<Skill name="Git" proficiency={80} />
+					<Skill name="Java" proficiency={50} />
+					<Skill name="Linux" proficiency={80} />
+					<Skill name="Rust" proficiency={20} />
+					<Skill name="C" proficiency={30} />
+					<Skill name="C++" proficiency={30} />
+					<Skill name="C#" proficiency={35} />
+					<Skill name="php" proficiency={40} />
+				</div>
+			</Window>
+			<Window title="Experience" icon={code.src}>
+				<Timeline items={[
+					{
+						date: "2024 - Present",
+						title: "Full-Stack Developer at Upango Consulting",
+						description: [
+							"A week before my internship ended, I was given the opportunity to continue working at Upango Consulting, opportunity which I accepted.",
+							"I now work as a Full-Stack developer, but I mainly focus on backend development using our main stack which consists of Node.js, TypeScript, Express, MariaDB and Docker for the backend, and React and Shopify Liquid for the frontend.",
+							"Since I also have some experience doing server administration, I also help with maintaining and deploying our applications on our VPS servers and always try to improve our stack by reducing deployment times, reliability and testing."
+						]
+					},
+					{
+						date: "2023 - 2024",
+						title: "Internship at Upango Consulting",
+						description: [
+							"During my second year studying Web Development in UCAM I started as an intern at Upango Consulting, where I started working in the frontend, but later moved to the backend as I liked it more than the frontend.",
+							"I began working with languages such as Shopify's templating language called \"liquid\", and later moved on to Node.js, TypeScript and Java along with databases such as MariaDB for backend development."
+						]
+					},
+					{
+						date: "2022 - 2024",
+						title: "Web Development Student (Associates Degree) at UCAM",
+						description: [
+							"I started studying an Associates in Web Development.",
+							"During this time I specialized in front-end development, learning HTML, CSS, JavaScript, and frameworks like React and Astro.",
+							"Because of my previous programming experience, I was able to pick up the concepts quickly and excel in my studies."
+						]
+					},
+					{
+						date: "2020 - 2022",
+						title: "Student at the University of Murcia",
+						description: ["Started studying Computer Science right as the COVID pandemic began, I studied for two years, but decided to switch to something I found more enjoyable, and that would adapt more to my way of learning."]
+					},
+					{
+						date: "2016 - Present",
+						title: "Self-Taught Programmer",
+						description: [
+							"At the age of 14 I started messing around with programming, choosing php as my first language, during this time I followed tutorials and learnt a lot.",
+							"Developed a small twitter clone using php and MySQL, which helped practice the knowledge I had acquired, even if my skills weren't great at the time.",
+							"I also started learning other languages such as Java for Minecraft plugins and modding, and C# for a small Unity Project I worked on with a friend.",
+							"To this day I continue learning new things to improve my skills as a developer and expand my knowledge."
+						]
+					}
+				]} />
+			</Window>
+			<Window title="Contact" icon={home.src}>
+				<p>If you would like to get in touch with me, feel free to reach out via email at <a href="mailto:alejandrovillarrealayala@gmail.com">alejandrovillarrealayala@gmail.com</a></p>
+				<p>You can also find me on <a href="https://es.linkedin.com/in/alejandro-villarreal-ayala-119788312">LinkedIn</a>.</p>
+			</Window>
+		</Container>
+		<script>
+			const toggle = document.getElementById('theme-toggle') as HTMLButtonElement;
+			const icon = document.getElementById('theme-icon') as HTMLSpanElement;
+
+			const updateButton = () => {
+				const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+				icon.textContent = isDark ? '☀️' : '🌙';
+			};
+
+			toggle.addEventListener('click', () => {
+				const current = document.documentElement.getAttribute('data-theme');
+				const newTheme = current === 'dark' ? 'light' : 'dark';
+				document.documentElement.setAttribute('data-theme', newTheme);
+				localStorage.setItem('theme', newTheme);
+				updateButton();
+			});
+
+			updateButton();
+		</script>
+	</body>
+</html>
+<style>
+	.window-banner-inner {
+		min-height: 20rem;
+		display: flex;
+		align-items: center;
+		width: 100%;
+	}
+	.window-pfp-container {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		color: white;
+		padding-left: 8em;
+		text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+	}
+
+	.skills-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+		gap: 0.75rem;
+	}
+
+	@media (max-width: 600px) {
+		.window-banner-inner {
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		.window-pfp-container {
+			flex-direction: column;
+			text-align: center;
+			padding-left: 0;
+		}
+	}
+</style>

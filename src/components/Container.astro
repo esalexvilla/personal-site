@@ -1,0 +1,25 @@
+---
+---
+<div class="container">
+  <div class="max-width-container">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .max-width-container {
+    max-width: 1300px;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+</style>

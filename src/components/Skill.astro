@@ -1,0 +1,65 @@
+---
+interface Props {
+  name: string;
+  icon?: string;
+  proficiency?: number;
+  category?: string;
+}
+
+const { name, icon, proficiency, category } = Astro.props;
+---
+
+<div class="skill" data-category={category}>
+  <div class="skill-header">
+    {icon ? <img src={icon} alt={name} class="skill-icon" width="24" height="24" /> : null}
+    <span class="skill-name">{name}</span>
+  </div>
+  {proficiency !== undefined ? (
+    <div class="proficiency-bar">
+      <div class="proficiency-fill" style={`width: ${proficiency}%`}></div>
+    </div>
+  ) : null}
+</div>
+
+<style>
+  .skill {
+    border: 1px solid var(--border-color);
+    background-color: var(--button-bg);
+    padding: 0.75rem 1rem;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skill:hover {
+    background-color: var(--button-hover);
+    transform: translateY(-2px);
+  }
+
+  .skill-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-icon {
+    filter: var(--inver-icon);
+  }
+
+  .skill-name {
+    font-weight: 500;
+  }
+
+  .proficiency-bar {
+    height: 4px;
+    background-color: var(--border-color);
+    overflow: hidden;
+  }
+
+  .proficiency-fill {
+    height: 100%;
+    background-color: var(--timeline-marker-border);
+    transition: width 0.5s ease;
+  }
+</style>
