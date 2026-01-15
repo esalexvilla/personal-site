@@ -1,0 +1,82 @@
+---
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<div class="modal" id={id} role="dialog" aria-modal="true" aria-labelledby={`${id}-title`} hidden>
+  <div class="modal-backdrop" data-modal-close></div>
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h3 id={`${id}-title`}>{title}</h3>
+      <button class="modal-close" type="button" data-modal-close aria-label="Close modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal[hidden] {
+    display: none;
+  }
+
+  .modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    z-index: 2000;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-panel {
+    position: relative;
+    max-width: min(640px, 90vw);
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: var(--window-content-bg);
+    border: 2px solid var(--border-color);
+    padding: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-close {
+    background: var(--button-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .modal-close:hover {
+    background: var(--button-hover);
+  }
+
+  .modal-body {
+    display: grid;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+</style>

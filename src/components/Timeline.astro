@@ -1,4 +1,6 @@
 ---
+import Modal from "./Modal.astro";
+
 interface TimelineItem {
   date: string;
   title: string;
@@ -13,17 +15,67 @@ const { items } = Astro.props;
 ---
 
 <div class="timeline">
-  {items.map((item, index) => (
-    <div class="timeline-item">
-      <div class="timeline-marker"></div>
-      <div class="timeline-content">
-        <div class="timeline-date">{item.date}</div>
-        <div class="timeline-title">{item.title}</div>
-        <div class="timeline-description">{item.description.map((desc, i) => <p>{desc}</p>)}</div>
+  {items.map((item, index) => {
+    const modalId = `timeline-modal-${index}`;
+
+    return (
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <button class="timeline-content" type="button" data-modal-open={modalId} aria-haspopup="dialog">
+          <div class="timeline-date">{item.date}</div>
+          <div class="timeline-title">{item.title}</div>
+          <div class="timeline-summary">{item.description[0]}</div>
+          <div class="timeline-hint">Click to view details</div>
+        </button>
+        <Modal id={modalId} title={item.title}>
+          <div class="timeline-modal-date">{item.date}</div>
+          <div class="timeline-modal-description">
+            {item.description.map((desc) => (
+              <p>{desc}</p>
+            ))}
+          </div>
+        </Modal>
       </div>
-    </div>
-  ))}
+    );
+  })}
 </div>
+
+<script is:inline>
+  const openButtons = document.querySelectorAll('[data-modal-open]');
+  const closeTargets = document.querySelectorAll('[data-modal-close]');
+
+  const openModal = (id) => {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.hidden = false;
+    const closeButton = modal.querySelector('[data-modal-close]');
+    closeButton?.focus();
+  };
+
+  const closeModal = (modal) => {
+    if (!modal) return;
+    modal.hidden = true;
+  };
+
+  openButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const id = button.getAttribute('data-modal-open');
+      if (id) openModal(id);
+    });
+  });
+
+  closeTargets.forEach((target) => {
+    target.addEventListener('click', () => {
+      const modal = target.closest('.modal');
+      closeModal(modal);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('.modal:not([hidden])').forEach((modal) => closeModal(modal));
+  });
+</script>
 
 <style>
 	.timeline {
@@ -69,6 +121,12 @@ const { items } = Astro.props;
 		padding: 0.75rem;
 		flex-grow: 1;
 		background-color: var(--window-content-bg);
+		text-align: left;
+		cursor: pointer;
+		width: 100%;
+		font: inherit;
+		appearance: none;
+		color: var(--text-color);
 	}
 
 	.timeline-date {
@@ -83,8 +141,34 @@ const { items } = Astro.props;
 		margin-bottom: 0.5rem;
 	}
 
-	.timeline-description {
-		font-size: 0.875rem;
+	.timeline-content:hover {
+		background-color: var(--button-hover);
+	}
+
+	.timeline-content:focus-visible {
+		outline: 2px solid var(--timeline-marker-border);
+		outline-offset: 2px;
+	}
+
+	.timeline-hint {
+		font-size: 0.8rem;
+		color: var(--timeline-date-color);
+	}
+
+	.timeline-summary {
+		font-size: 0.9rem;
 		line-height: 1.4;
+		margin-bottom: 0.4rem;
+	}
+
+	.timeline-modal-date {
+		font-size: 0.85rem;
+		color: var(--timeline-date-color);
+		font-weight: bold;
+	}
+
+	.timeline-modal-description {
+		display: grid;
+		gap: 0.75rem;
 	}
 </style>
